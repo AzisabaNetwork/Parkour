@@ -1,8 +1,8 @@
-name: Parkour
+name: ${project.name}
 main: amata1219.parkour.Main
 depend: [Votifier]
 api-version: 1.13
-version: 1.0.0
+version: ${project.version}
 author: amata1219(Twitter@amata1219)
 commands:
   checkarea:

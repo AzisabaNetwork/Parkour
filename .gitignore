@@ -1,6 +1,6 @@
 
-# Created by https://www.gitignore.io/api/eclipse
-# Edit at https://www.gitignore.io/?templates=eclipse
+# Created by https://www.gitignore.io/api/maven,eclipse
+# Edit at https://www.gitignore.io/?templates=maven,eclipse
 
 ### Eclipse ###
 .metadata
@@ -71,4 +71,17 @@ local.properties
 
 .sts4-cache/
 
-# End of https://www.gitignore.io/api/eclipse
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+.flattened-pom.xml
+
+# End of https://www.gitignore.io/api/maven,eclipse
