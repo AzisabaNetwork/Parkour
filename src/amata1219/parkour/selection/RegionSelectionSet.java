@@ -165,7 +165,7 @@ public class RegionSelectionSet implements Listener {
 
 	//選択をクリアする
 	public void clearSelection(Player player){
-		selections.remove(player);
+		selections.remove(player.getUniqueId());
 	}
 
 }
