@@ -6,9 +6,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import amata1219.parkour.parkour.ParkourRegion;
 import amata1219.parkour.chunk.ChunksToObjectsMap;
 import amata1219.parkour.parkour.Parkour;
+import amata1219.parkour.parkour.ParkourRegion;
 import amata1219.parkour.user.User;
 import amata1219.parkour.user.UserSet;
 
@@ -56,8 +56,6 @@ public abstract class PassRegionListener implements Listener {
 
 		//アスレを取得する
 		Parkour parkour = (fromRegion != null ? fromRegion.parkour : (toRegion != null ? toRegion.parkour : null));
-
-		System.out.println(parkour != null);
 
 		//アスレが存在しなければ戻る
 		if(parkour == null) return;
