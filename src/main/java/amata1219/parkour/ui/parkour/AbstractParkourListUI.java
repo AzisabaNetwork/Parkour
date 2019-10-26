@@ -165,7 +165,7 @@ public abstract class AbstractParkourListUI<T extends Parkour> implements Invent
 									BilingualText.stream("&b-$rank-&7-位 &b-$name &7-@ &b-$time", "&b-$rank-&7-. &b-$name &7-@ &b-$time")
 									.textBy(player)
 									.setAttribute("$rank", rank.getAndIncrement())
-									.setAttribute("$name", Bukkit.getOfflinePlayer(record.first))
+									.setAttribute("$name", Bukkit.getOfflinePlayer(record.first).getName())
 									.setAttribute("$time", record.second)
 									.color()
 									.toString()
