@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Statistic;
-import org.bukkit.craftbukkit.v1_13_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.joor.Reflect;
 
 import com.google.common.collect.ImmutableList;
 
@@ -40,7 +40,7 @@ public class StatusBoard {
 			new Line(s -> s.displayCoins, 5, "&b-所持コイン数&7-: &f-$value", "&b-Coins&7-: &f-$value", u -> u.coins()),
 			new Line(s -> s.displayTimePlayed, 4, "&b-総プレイ時間&7-: &f-$valueh", "&b-Time Played&7-: &f-$valueh", u -> u.asBukkitPlayer().getStatistic(Statistic.PLAY_ONE_MINUTE) / 72000),
 			new Line(s -> s.displayOnlinePlayers, 3, "&b-接続プレイヤー数&7-: &f-$value", "&b-Online Players&7-: &f-$value", u -> Bukkit.getOnlinePlayers().size()),
-			new Line(s -> s.displayPing, 2, "&b-遅延&7-: &f-$valuems", "&b-Ping&7-: &f-$valuems", u -> ((CraftPlayer) u.asBukkitPlayer()).getHandle().ping),
+			new Line(s -> s.displayPing, 2, "&b-遅延&7-: &f-$valuems", "&b-Ping&7-: &f-$valuems", u -> Reflect.on(u.asBukkitPlayer()).call("getHandle").get("ping")),
 			new Line(s -> true, 1, "", "", u -> ""),
 			new Line(s -> s.displayServerAddress, 0, "$value", "$value", u -> {
 				Scoreboard board = u.statusBoard.board;

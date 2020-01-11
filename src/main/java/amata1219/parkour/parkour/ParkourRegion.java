@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.scheduler.BukkitTask;
+import org.joor.Reflect;
 
 import amata1219.beta.parkour.location.ImmutableLocation;
 import amata1219.parkour.region.LocationOnBorderCollector;
@@ -11,9 +12,6 @@ import amata1219.parkour.region.Region;
 import amata1219.parkour.schedule.Async;
 import amata1219.parkour.selection.RegionSelection;
 import amata1219.parkour.util.Color;
-import net.minecraft.server.v1_13_R2.PacketPlayOutWorldParticles;
-import net.minecraft.server.v1_13_R2.ParticleParamRedstone;
-import net.minecraft.server.v1_13_R2.PlayerConnection;
 
 public class ParkourRegion extends Region {
 
@@ -24,7 +22,7 @@ public class ParkourRegion extends Region {
 	public final ImmutableLocation center;
 
 	//各地点のパーティクル
-	private List<PacketPlayOutWorldParticles> packets;
+	private List<Object> packets;
 
 	//パーティクルの表示位置
 	private int position;
@@ -64,9 +62,10 @@ public class ParkourRegion extends Region {
 								float green = color.adjustGreen(30) / 255f;
 								float blue = color.adjustBlue(30) / 255f;
 
-								return new PacketPlayOutWorldParticles(new ParticleParamRedstone(red, green, blue, 1), true,
+								Object particle = Reflect.onClass("ParticleParamRedstone").create(red, green, blue, 1).get();
+								return Reflect.onClass("PacketPlayOutWorldParticles").create(particle, true,
 										(float) location.x, (float) location.y + 0.15f, (float) location.z,
-										red, green, blue, 1, 0);
+										red, green, blue, 1, 0).get();
 								})
 							.collect(Collectors.toList());
 
@@ -93,12 +92,12 @@ public class ParkourRegion extends Region {
 			if(position >= size) position = 0;
 
 			//各ポジションに対応したパケットを取得する
-			PacketPlayOutWorldParticles packet1 = packets.get(position);
-			PacketPlayOutWorldParticles packet2 = packets.get(position < halfSize ? position + halfSize : position + halfSize - lastIndex);
+			Object packet1 = packets.get(position);
+			Object packet2 = packets.get(position < halfSize ? position + halfSize : position + halfSize - lastIndex);
 
 			position++;
 
-			for(PlayerConnection connection : parkour.connections.getConnections()){
+			for(Reflect connection : parkour.connections.getConnections()){
 				/*EntityPlayer player = connection.player;
 
 				//プレイヤーの描画距離を取得する
@@ -111,8 +110,8 @@ public class ParkourRegion extends Region {
 				//描画範囲外であれば処理しない
 				if(xDistance > viewChunks || zDistance > viewChunks) continue;*/
 
-				connection.sendPacket(packet1);
-				connection.sendPacket(packet2);
+				connection.call("sendPacket", packet1);
+				connection.call("sendPacket", packet2);
 			}
 		}).executeTimer(0, 1);
 	}

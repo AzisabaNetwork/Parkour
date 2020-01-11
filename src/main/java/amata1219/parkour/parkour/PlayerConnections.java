@@ -5,18 +5,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import org.bukkit.craftbukkit.v1_13_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-
-import net.minecraft.server.v1_13_R2.PlayerConnection;
+import org.joor.Reflect;
 
 public class PlayerConnections {
 
-	private final Map<UUID, PlayerConnection> connections = new HashMap<>();
+	private final Map<UUID, Reflect> connections = new HashMap<>();
 
 	public void add(Player player){
 		UUID uuid = player.getUniqueId();
-		PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
+		Reflect connection = Reflect.on(player).call("getHandle").field("playerConnection");
 		connections.put(uuid, connection);
 	}
 
@@ -24,7 +22,7 @@ public class PlayerConnections {
 		connections.remove(player.getUniqueId());
 	}
 
-	public Collection<PlayerConnection> getConnections(){
+	public Collection<Reflect> getConnections(){
 		return connections.values();
 	}
 

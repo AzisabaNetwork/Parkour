@@ -3,7 +3,7 @@ main: amata1219.parkour.Main
 depend: [Votifier]
 api-version: 1.13
 version: ${project.version}
-author: amata1219(Twitter@amata1219)
+authors: [amata1219, YukiLeafX]
 commands:
   checkarea:
   coin:

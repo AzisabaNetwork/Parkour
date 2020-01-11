@@ -1,10 +1,9 @@
 package amata1219.parkour.tweet;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.net.URLCodec;
 
 public class IntentTweetBuilder {
 
@@ -35,8 +34,8 @@ public class IntentTweetBuilder {
 
 	private String encode(String text){
 		try {
-			return new URLCodec("UTF-8").encode(text);
-		} catch (EncoderException e) {
+			return URLEncoder.encode(text, "UTF-8");
+		} catch ( UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		return "";

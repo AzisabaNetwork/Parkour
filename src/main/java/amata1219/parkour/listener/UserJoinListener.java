@@ -1,7 +1,5 @@
 package amata1219.parkour.listener;
 
-import static amata1219.parkour.util.Reflection.*;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -9,11 +7,12 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_13_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.joor.Reflect;
+
 import amata1219.parkour.function.ImprintRank;
 import amata1219.parkour.function.PlayerLocaleChange;
 import amata1219.parkour.function.ToggleHideMode;
@@ -22,12 +21,13 @@ import amata1219.parkour.parkour.Parkour;
 import amata1219.parkour.parkour.ParkourRegion;
 import amata1219.parkour.schedule.Sync;
 import amata1219.parkour.text.BilingualText;
-import amata1219.parkour.user.StatusBoard;
 import amata1219.parkour.user.InventoryUISet;
+import amata1219.parkour.user.StatusBoard;
 import amata1219.parkour.user.User;
 import amata1219.parkour.user.UserSet;
 import amata1219.parkour.util.Optional;
-import net.minecraft.server.v1_13_R2.Packet;
+
+import static amata1219.parkour.util.Reflection.*;
 
 public class UserJoinListener implements PlayerJoinListener {
 
@@ -135,7 +135,7 @@ public class UserJoinListener implements PlayerJoinListener {
 		//適当にチーム名を決める
 		setFieldValue(teamName, packet, UUID.randomUUID().toString().substring(0, 15));
 
-		((CraftPlayer) player).getHandle().playerConnection.sendPacket((Packet<?>) packet);
+		Reflect.on(player).call("getHandle").field("playerConnection").call("sendPacket", packet);
 	}
 
 }
